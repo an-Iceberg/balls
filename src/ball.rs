@@ -6,15 +6,19 @@ use macroquad::{
 use rand::Rng;
 
 pub struct Ball
-{ position: Vec2,
+{
+  position: Vec2,
   velocity: Vec2,
   radius: f32,
   color: Color,
 }
 
 impl Ball
-{ pub fn new() -> Self
-  { let position = Vec2::new(screen_width() / 2., screen_height() / 2.);
+{
+  #[allow(clippy::needless_return)]
+  pub fn new() -> Self
+  {
+    let position = Vec2::new(screen_width() / 2., screen_height() / 2.);
     let velocity = Vec2::new(
       rand::thread_rng().gen_range(-400_f32..=400_f32),
       rand::thread_rng().gen_range(-400_f32..=400_f32),
@@ -30,8 +34,10 @@ impl Ball
     return Ball { position, velocity, radius, color };
   }
 
+  // Todo: account for δ_time
   pub fn update(&mut self)
-  { self.position += self.velocity * get_frame_time();
+  {
+    self.position += self.velocity * get_frame_time();
 
     // Reverse x direction if the border is hit
     if self.position.x < self.radius || self.position.x > (screen_width() - self.radius)
@@ -46,21 +52,21 @@ impl Ball
     }
   }
 
+  #[allow(clippy::needless_return)]
   pub fn x(&self) -> f32
-  { return self.position.x;
-  }
+  { return self.position.x; }
 
+  #[allow(clippy::needless_return)]
   pub fn y(&self) -> f32
-  { return self.position.y;
-  }
+  { return self.position.y; }
 
+  #[allow(clippy::needless_return)]
   pub fn radius(&self) -> f32
-  { return self.radius;
-  }
+  { return self.radius; }
 
+  #[allow(clippy::needless_return)]
   pub fn color(&self) -> Color
-  { return self.color;
-  }
+  { return self.color; }
 }
 
 #[cfg(test)]
