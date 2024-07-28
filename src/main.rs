@@ -1,7 +1,7 @@
 mod ball;
 
 use ball::Ball;
-use egui_macroquad::{draw, egui::{Align2, ComboBox, Vec2, Window}, ui};
+use egui_macroquad::{draw, egui::{epaint::Shadow, Align2, ComboBox, Vec2, Visuals, Window}, ui};
 use macroquad::prelude::*;
 
 pub(crate) const VERSION: Option<&str> = option_env!("CARGO_PKG_VERSION");
@@ -40,10 +40,16 @@ async fn main()
 
     ui(|egui_context|
     {
+      egui_context.set_visuals(Visuals
+      {
+        window_shadow: Shadow::NONE,
+        ..Default::default()
+      });
+
       Window::new("")
         .movable(false)
         .resizable(false)
-        .anchor(Align2::RIGHT_TOP, egui_macroquad::egui::Vec2::new(-10., 10.))
+        .anchor(Align2::RIGHT_TOP, Vec2::new(-10., 10.))
         .fixed_size(Vec2::new(0., 0.))
         .show(egui_context, |ui|
         {

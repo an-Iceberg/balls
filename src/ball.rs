@@ -25,7 +25,7 @@ impl Ball
       rand::thread_rng().gen_range(-400_f32..=400_f32),
       rand::thread_rng().gen_range(-400_f32..=400_f32),
     );
-    let radius = rand::thread_rng().gen_range(1_f32..=40_f32);
+    let radius = rand::thread_rng().gen_range(4_f32..=40_f32);
     let color = Color::from_rgba(
       rand::thread_rng().gen_range(0_u8..=255_u8),
       rand::thread_rng().gen_range(0_u8..=255_u8),
