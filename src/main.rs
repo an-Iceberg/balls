@@ -1,7 +1,7 @@
 mod ball;
 
 use ball::Ball;
-use egui_macroquad::{draw, egui::{Align2, ComboBox, Slider, Vec2, Window}, ui};
+use egui_macroquad::{draw, egui::{Align2, ComboBox, Vec2, Window}, ui};
 use macroquad::prelude::*;
 
 pub(crate) const VERSION: Option<&str> = option_env!("CARGO_PKG_VERSION");
@@ -31,10 +31,6 @@ async fn main()
   {
     clear_background(BLACK);
 
-    // Todo: some balls get stuck «in» the walls
-
-    // ToDo: web version has wildly variable fps; account for that in the physics
-    // Draws balls
     balls.iter_mut()
       .for_each(|ball|
       {
@@ -45,8 +41,6 @@ async fn main()
     ui(|egui_context|
     {
       Window::new("")
-        .title_bar(false)
-        .collapsible(false)
         .movable(false)
         .resizable(false)
         .anchor(Align2::RIGHT_TOP, egui_macroquad::egui::Vec2::new(-10., 10.))
@@ -109,7 +103,7 @@ async fn main()
             ui.label(format!("v{}", VERSION.unwrap_or("unknown")));
             ui.separator();
             ui.label("Made by");
-            ui.hyperlink_to(AUTHORS.unwrap_or("unknown").to_string(), "https://github.com/an-Iceberg");
+            ui.hyperlink_to(AUTHORS.unwrap_or("Sandra").to_string(), "https://github.com/an-Iceberg");
           });
         });
     });

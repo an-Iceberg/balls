@@ -1,5 +1,5 @@
 use macroquad::{
-  prelude::{clamp, Color, Vec2},
+  prelude::{Color, Vec2},
   time::get_frame_time,
   window::{screen_width, screen_height},
 };
@@ -18,7 +18,9 @@ impl Ball
   #[allow(clippy::needless_return)]
   pub fn new() -> Self
   {
+    // Put ball in centre of the screen
     let position = Vec2::new(screen_width() / 2., screen_height() / 2.);
+    // Everything else is randomly chosen
     let velocity = Vec2::new(
       rand::thread_rng().gen_range(-400_f32..=400_f32),
       rand::thread_rng().gen_range(-400_f32..=400_f32),
@@ -34,21 +36,41 @@ impl Ball
     return Ball { position, velocity, radius, color };
   }
 
-  // Todo: account for δ_time
+  // Collision
   pub fn update(&mut self)
   {
     self.position += self.velocity * get_frame_time();
 
-    // Reverse x direction if the border is hit
-    if self.position.x < self.radius || self.position.x > (screen_width() - self.radius)
-    { clamp( self .position .x, self.radius, screen_width() - self.radius,);
-      self.velocity.x *= -1.;
+    // Left wall
+    if self.position.x < self.radius
+    {
+      if self.velocity.x < 0.
+      { self.velocity.x *= -1.; }
+      self.position.x = self.radius;
     }
 
-    // Same for y direction
-    if self.position.y < self.radius || self.position.y > (screen_height() - self.radius)
-    { clamp( self .position .y, self.radius, screen_height() - self.radius,);
-      self.velocity.y *= -1.;
+    // Right wall
+    if self.position.x > (screen_width() - self.radius)
+    {
+      if self.velocity.x > 0.
+      { self.velocity.x *= -1.; }
+      self.position.x = screen_width() - self.radius;
+    }
+
+    // Top wall
+    if self.position.y < self.radius
+    {
+      if self.velocity.y < 0.
+      { self.velocity.y *= -1.; }
+      self.position.y = self.radius;
+    }
+
+    // Bottom wall
+    if self.position.y > (screen_height() - self.radius)
+    {
+      if self.velocity.y > 0.
+      { self.velocity.y *= -1.; }
+      self.position.y = screen_height() - self.radius;
     }
   }
 
